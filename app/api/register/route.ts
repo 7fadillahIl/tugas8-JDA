@@ -10,7 +10,8 @@ type RegisterPayload = {
 
 export async function POST(req: Request) {
   try {
-    const { name, email, password }: RegisterPayload = await req.json();
+    const body = (await req.json()) as RegisterPayload;
+    const { name, email, password } = body;
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
